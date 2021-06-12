@@ -15,6 +15,11 @@ applyOperator(std::string op, unsigned v1, unsigned v2) {
 }
 
 unsigned
+fromBin2Dec(std::string binNumber) {
+	return stoi(binNumber, 0, 2);
+}
+
+unsigned
 fromHex2Dec(std::string hexNumber) {
 	std::stringstream ss;
 	ss << hexNumber;
@@ -31,6 +36,8 @@ getNumber(std::string v) {
 		return std::stoi(number);
 	if (numberSystem == "0x" || numberSystem == "0X")
 		return fromHex2Dec(number);
+	if (numberSystem == "0b" || numberSystem == "0B")
+		return fromBin2Dec(number);
 	else
 		throw "Invalid number system";
 }
