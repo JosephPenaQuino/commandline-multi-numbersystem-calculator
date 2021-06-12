@@ -28,6 +28,14 @@ fromHex2Dec(std::string hexNumber) {
 }
 
 std::string
+fromDec2Hex(unsigned decNumber) {
+	std::stringstream ss;
+	ss << std::hex << decNumber;
+	std::string res(ss.str());
+	return res;
+}
+
+std::string
 fromDec2Bin(unsigned decNumber) {
 	return std::bitset<8>(decNumber).to_string();
 }
@@ -48,6 +56,8 @@ getNumber(std::string v) {
 
 unsigned
 getResult(std::string line) {
+	if (line[0] == 'q')
+		exit(0);
 	std::stringstream ss(line);
 	std::string v1, op, v2;
 	ss >> v1;
@@ -63,6 +73,7 @@ printResult(unsigned number) {
 	std::cout << "Results:" << std::endl;
 	std::cout << "0d" << number << std::endl;
 	std::cout << "0b" << fromDec2Bin(number) << std::endl;
+	std::cout << "0x" << fromDec2Hex(number) << std::endl << std::endl;
 }
 
 int
