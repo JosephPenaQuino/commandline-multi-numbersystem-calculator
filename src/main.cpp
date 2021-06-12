@@ -1,17 +1,16 @@
+#include <bitset>
 #include <iostream>
 #include <sstream>
 #include <string>
 
 unsigned
 applyOperator(std::string op, unsigned v1, unsigned v2) {
-	if (op == "+") {
+	if (op == "+")
 		return v1 + v2;
-	}
-	if (op == "-") {
+	if (op == "-")
 		return v1 - v2;
-	} else {
+	else
 		throw "Invalid operator";
-	}
 }
 
 unsigned
@@ -26,6 +25,11 @@ fromHex2Dec(std::string hexNumber) {
 	int decNumber;
 	ss >> std::hex >> decNumber;
 	return decNumber;
+}
+
+std::string
+fromDec2Bin(unsigned decNumber) {
+	return std::bitset<8>(decNumber).to_string();
 }
 
 unsigned
@@ -56,7 +60,9 @@ getResult(std::string line) {
 
 void
 printResult(unsigned number) {
+	std::cout << "Results:" << std::endl;
 	std::cout << "0d" << number << std::endl;
+	std::cout << "0b" << fromDec2Bin(number) << std::endl;
 }
 
 int
