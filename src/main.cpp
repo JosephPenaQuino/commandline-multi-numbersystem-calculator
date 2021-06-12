@@ -1,5 +1,5 @@
-#include <bits/stdc++.h>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 unsigned
@@ -15,14 +15,24 @@ applyOperator(std::string op, unsigned v1, unsigned v2) {
 }
 
 unsigned
+fromHex2Dec(std::string hexNumber) {
+	std::stringstream ss;
+	ss << hexNumber;
+	int decNumber;
+	ss >> std::hex >> decNumber;
+	return decNumber;
+}
+
+unsigned
 getNumber(std::string v) {
 	std::string numberSystem = v.substr(0, 2);
 	std::string number = v.substr(2, v.length() - 2);
-	if (numberSystem == "0d" || numberSystem == "0D") {
+	if (numberSystem == "0d" || numberSystem == "0D")
 		return std::stoi(number);
-	} else {
+	if (numberSystem == "0x" || numberSystem == "0X")
+		return fromHex2Dec(number);
+	else
 		throw "Invalid number system";
-	}
 }
 
 unsigned
