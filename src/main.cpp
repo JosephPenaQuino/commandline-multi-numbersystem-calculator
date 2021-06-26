@@ -44,18 +44,27 @@ fromDec2Bin(unsigned decNumber) {
 	return std::bitset<8>(decNumber).to_string();
 }
 
+static bool
+isNumber(const char c) {
+	return c >= 48 && c <= 57;
+}
+
 unsigned
 getNumber(std::string v) {
 	std::string numberSystem = v.substr(0, 2);
 	std::string number = v.substr(2, v.length() - 2);
 	if (numberSystem == "0d" || numberSystem == "0D")
 		return std::stoi(number);
+	if (isNumber(numberSystem[0]) && isNumber(numberSystem[1]))
+		return std::stoi(numberSystem + number);
 	if (numberSystem == "0x" || numberSystem == "0X")
 		return fromHex2Dec(number);
 	if (numberSystem == "0b" || numberSystem == "0B")
 		return fromBin2Dec(number);
-	else
-		throw "Invalid number system";
+	else {
+		std::cout << "Invalid Number" << std::endl;
+		exit(0);
+	}
 }
 
 unsigned
