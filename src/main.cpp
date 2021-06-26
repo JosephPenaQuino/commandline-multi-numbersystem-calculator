@@ -13,6 +13,14 @@ applyOperator(std::string op, unsigned v1, unsigned v2) {
 		return v1 | v2;
 	if (op == "&")
 		return v1 & v2;
+	if (op == "*")
+		return v1 * v2;
+	if (op == "/")
+		return v1 / v2;
+	if (op == "<<")
+		return v1 << v2;
+	if (op == ">>")
+		return v1 >> v2;
 	else
 		throw "Invalid operator";
 }
@@ -44,23 +52,40 @@ fromDec2Bin(unsigned decNumber) {
 	return std::bitset<8>(decNumber).to_string();
 }
 
+static bool
+isNumber(const char c) {
+	return c >= 48 && c <= 57;
+}
+
 unsigned
 getNumber(std::string v) {
 	std::string numberSystem = v.substr(0, 2);
 	std::string number = v.substr(2, v.length() - 2);
-	if (numberSystem == "0d" || numberSystem == "0D")
+	if (numberSystem == "0d" || numberSystem == "0D") {
+		if (number.length() == 0)
+			return 0;
 		return std::stoi(number);
-	if (numberSystem == "0x" || numberSystem == "0X")
+	}
+	if (isNumber(numberSystem[0]) && isNumber(numberSystem[1]))
+		return std::stoi(numberSystem + number);
+	if (numberSystem == "0x" || numberSystem == "0X") {
+		if (number.length() == 0)
+			return 0;
 		return fromHex2Dec(number);
-	if (numberSystem == "0b" || numberSystem == "0B")
+	}
+	if (numberSystem == "0b" || numberSystem == "0B") {
+		if (number.length() == 0)
+			return 0;
 		return fromBin2Dec(number);
-	else
-		throw "Invalid number system";
+	} else {
+		std::cout << "Invalid Number" << std::endl;
+		exit(0);
+	}
 }
 
 unsigned
 getResult(std::string line) {
-	if (line[0] == 'q')
+	if (line[0] < 48 || line[0] > 57)
 		exit(0);
 	std::stringstream ss(line);
 	std::string v1, op, v2;
@@ -88,6 +113,8 @@ main() {
 
 	std::string line;
 	while (getline(std::cin, line)) {
+		if (line.length() == 0)
+			break;
 		printResult(getResult(line));
 	}
 	return 0;
