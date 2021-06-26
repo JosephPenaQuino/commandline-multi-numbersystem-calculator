@@ -13,6 +13,10 @@ applyOperator(std::string op, unsigned v1, unsigned v2) {
 		return v1 | v2;
 	if (op == "&")
 		return v1 & v2;
+	if (op == "<<")
+		return v1 << v2;
+	if (op == ">>")
+		return v1 >> v2;
 	else
 		throw "Invalid operator";
 }
