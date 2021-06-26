@@ -60,7 +60,7 @@ getNumber(std::string v) {
 
 unsigned
 getResult(std::string line) {
-	if (line[0] == 'q')
+	if (line[0] < 48 || line[0] > 57)
 		exit(0);
 	std::stringstream ss(line);
 	std::string v1, op, v2;
@@ -88,6 +88,8 @@ main() {
 
 	std::string line;
 	while (getline(std::cin, line)) {
+		if (line.length() == 0)
+			break;
 		printResult(getResult(line));
 	}
 	return 0;
